@@ -62,9 +62,10 @@ export default defineComponent({
 
     watch(error, () => {
       if (error.value != '') {
-        $q.dialog({
-          title: 'Error',
+        $q.notify({
           message: error.value,
+          color: 'negative',
+          position: 'bottom-right',
         });
       }
     });

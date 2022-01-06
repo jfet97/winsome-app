@@ -34,6 +34,20 @@
           text-color="primary"
           @click="onLogoutClick"
         />
+        <q-btn
+          v-if="!isSignedIn && !isRouteRegister"
+          label="Register"
+          color="white"
+          text-color="primary"
+          @click="goToRegister"
+        />
+        <q-btn
+          v-if="!isSignedIn && !isRouteLogin"
+          label="Login"
+          color="white"
+          text-color="primary"
+          @click="goToLogin"
+        />
       </q-toolbar>
     </q-header>
 
@@ -49,6 +63,7 @@
 import { defineComponent, computed } from 'vue';
 import { useStore } from '../../src/store';
 import { useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 
 export default defineComponent({
   name: 'LeftToolbarLayout',
@@ -58,6 +73,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
+    const route = useRoute();
 
     const isSignedIn = computed(() => store.getters['auth/isSignedIn']);
 
@@ -78,12 +94,27 @@ export default defineComponent({
       router.push('/profile');
     };
 
+    const goToRegister = () => {
+      router.push('/register');
+    };
+
+    const goToLogin = () => {
+      router.push('/login');
+    };
+
+    const isRouteLogin = computed(() => route.fullPath === '/login');
+    const isRouteRegister = computed(() => route.fullPath === '/register');
+
     return {
       isSignedIn,
       onLogoutClick,
       goToFeed,
       goToBlog,
       goToProfile,
+      goToRegister,
+      goToLogin,
+      isRouteLogin,
+      isRouteRegister,
     };
   },
 });

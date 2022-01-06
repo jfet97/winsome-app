@@ -42,7 +42,10 @@ export default route<StateInterface>(function ({ store }) {
       !store.getters['auth/isSignedIn']
     ) {
       next('/login');
-    } else if (to.path === '/login' && store.getters['auth/isSignedIn']) {
+    } else if (
+      ['/login', '/register'].includes(to.path) &&
+      store.getters['auth/isSignedIn']
+    ) {
       next('/feed');
     } else {
       next();

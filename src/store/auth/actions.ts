@@ -40,7 +40,7 @@ const actions: ActionTree<IAuth, StateInterface> = {
   },
   async login({ commit, dispatch }, payload: LoginRequestPayload) {
     commit('setIsLoading', true);
-
+    console.log(api.defaults.baseURL)
     await api.post<LoginResponsePayload>('/login?force=true', payload).then(
       async (response) => {
         const jwt = response.data.res.jwt;
