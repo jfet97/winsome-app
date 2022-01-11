@@ -40,7 +40,7 @@ const actions: ActionTree<IAuth, StateInterface> = {
   },
   async login({ commit, dispatch }, payload: LoginRequestPayload) {
     commit('setIsLoading', true);
-    console.log(api.defaults.baseURL)
+    console.log(api.defaults.baseURL);
     await api.post<LoginResponsePayload>('/login?force=true', payload).then(
       async (response) => {
         const jwt = response.data.res.jwt;
@@ -59,8 +59,14 @@ const actions: ActionTree<IAuth, StateInterface> = {
 
     commit('setIsLoading', false);
   },
-  async logout({ commit, dispatch }) {
-    await dispatch('unsetAuth');
+  async logout({ dispatch }) {
+    try {
+      await api.post('/logout');
+    } catch (e) {
+      console.error(e);
+    } finally {
+      await dispatch('unsetAuth');
+    }
   },
 };
 

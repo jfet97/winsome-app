@@ -60,7 +60,7 @@
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, nextTick } from 'vue';
 import { useStore } from '../../src/store';
 import { useRouter } from 'vue-router';
 import { useRoute } from 'vue-router';
@@ -77,8 +77,8 @@ export default defineComponent({
 
     const isSignedIn = computed(() => store.getters['auth/isSignedIn']);
 
-    const onLogoutClick = () => {
-      store.dispatch('auth/logout');
+    const onLogoutClick = async () => {
+      await store.dispatch('auth/logout');
       router.push('/login');
     };
 

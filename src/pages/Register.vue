@@ -89,12 +89,14 @@ export default defineComponent({
             tags: tags.value.split(' ')
           })
           .then(
-            (response) => {
+            async (response) => {
               $q.notify({
                 message: response?.data.res ?? '',
                 color: 'positive',
                 position: 'bottom-right',
               });
+              await new Promise(res => setTimeout(res, 750));
+              await router.push('/login');
             },
             (error: unknown) => {
               if (axios.isAxiosError(error)) {
