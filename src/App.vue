@@ -24,7 +24,7 @@ export default defineComponent({
 
     api.interceptors.response.use(void 0, async (err) => {
       if (err.response.status === 401) {
-        store.dispatch('auth/logout');
+        await store.dispatch('auth/logout');
         router.push('/login');
       }
       throw err;
