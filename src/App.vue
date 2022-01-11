@@ -23,7 +23,7 @@ export default defineComponent({
     }
 
     api.interceptors.response.use(void 0, async (err) => {
-      if (err.response.status === 401 && err.config.url !== '/logout') {
+      if (err.response.status === 401 && err?.config.url !== '/logout' && !err?.config.__isRetryRequest) {
         await store.dispatch('auth/logout');
         router.push('/login');
       }
